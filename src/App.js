@@ -1,25 +1,78 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import RepetitionExercise from './components/RepetitionExercise';
+import DurationExercise from './components/DurationExercise';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//which exercise is chosen
+class App extends Component {
+  state = {
+    selectedExercise: null,
+  };
+
+//stores exercises
+  SelectExercise = (exercise) => {
+    this.setState({ selectedExercise: exercise });
+  };
+
+//stores main menu
+  ReturnToMenu = () => {
+    this.setState({ selectedExercise: null });
+  };
+
+  render() {
+    const exercises = [
+      { name: "Push-ups", type: "repetition" },
+      { name: "Bicycling", type: "duration" },
+      { name: "Jumping Jacks", type: "repetition" },
+      { name: "Running", type: "duration" },
+      { name: "Sit-ups", type: "repetition" },
+    ];
+
+    //stores display
+    let content;
+
+    //menu
+    if (this.state.selectedExercise === null) {
+      content = (
+        <div>
+          <p>Select an Exercise:</p>
+          <ul>
+            {exercises.map((exercise) => (
+              <li key={exercise.name}>
+                <button onClick={() => this.SelectExercise(exercise)}>
+                  {exercise.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+// repetition exercise
+    else if (this.state.selectedExercise.type === 'repetition') {
+      content = (
+        <div>
+          <RepetitionExercise name={this.state.selectedExercise.name} />
+          <button onClick={this.ReturnToMenu}>Return</button>
+        </div>
+      );
+// duration exercise
+    } else if (this.state.selectedExercise.type === 'duration') {
+      content = (
+        <div>
+          <DurationExercise name={this.state.selectedExercise.name} />
+          <button onClick={this.ReturnToMenu}>Return</button>
+        </div>
+      );
+    }
+
+//displays content above and header
+    return (
+      <div className="Exercises">
+        <h1>Go Do Something!</h1>
+        {content}  {}
+      </div>
+    );
+  }
 }
 
 export default App;
