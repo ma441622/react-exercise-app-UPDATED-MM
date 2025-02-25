@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RepetitionExercise from './components/RepetitionExercise';
 import DurationExercise from './components/DurationExercise';
+import RunningExercise from './components/RunningExercise';
 
 //which exercise is chosen
 class App extends Component {
@@ -8,12 +9,12 @@ class App extends Component {
     selectedExercise: null,
   };
 
-//stores exercises
+  //stores exercises
   SelectExercise = (exercise) => {
     this.setState({ selectedExercise: exercise });
   };
 
-//stores main menu
+  //stores main menu
   ReturnToMenu = () => {
     this.setState({ selectedExercise: null });
   };
@@ -23,7 +24,7 @@ class App extends Component {
       { name: "Push-ups", type: "repetition" },
       { name: "Bicycling", type: "duration" },
       { name: "Jumping Jacks", type: "repetition" },
-      { name: "Running", type: "duration" },
+      { name: "Running", type: "running" },
       { name: "Sit-ups", type: "repetition" },
     ];
 
@@ -47,7 +48,7 @@ class App extends Component {
         </div>
       );
     }
-// repetition exercise
+    // repetition exercise
     else if (this.state.selectedExercise.type === 'repetition') {
       content = (
         <div>
@@ -55,8 +56,9 @@ class App extends Component {
           <button onClick={this.ReturnToMenu}>Return</button>
         </div>
       );
-// duration exercise
-    } else if (this.state.selectedExercise.type === 'duration') {
+    }
+    // duration exercise
+    else if (this.state.selectedExercise.type === 'duration') {
       content = (
         <div>
           <DurationExercise name={this.state.selectedExercise.name} />
@@ -64,15 +66,25 @@ class App extends Component {
         </div>
       );
     }
+    // running exercise
+    else if (this.state.selectedExercise.type === 'running') {
+      content = (
+        <div>
+          <RunningExercise name={this.state.selectedExercise.name} />
+          <button onClick={this.ReturnToMenu}>Return</button>
+        </div>
+      );
+    }
 
-//displays content above and header
+    //displays content above and header
     return (
       <div className="Exercises">
         <h1>Go Do Something!</h1>
-        {content}  {}
+        {content}
       </div>
     );
   }
 }
 
 export default App;
+
